@@ -85,9 +85,9 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">hello</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
+                    <a href="{{ route('user.login')}}">hello</a>
+                    <a href="{{ route('user.register')}}">Laracasts</a>
+                    <a href="{{ route('bit')}}">News</a>
                     <a href="https://blog.laravel.com">Blog</a>
                     <a href="https://nova.laravel.com">Nova</a>
                     <a href="https://forge.laravel.com">Forge</a>
