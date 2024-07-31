@@ -19,6 +19,16 @@ class ProductController extends Controller
     }
     public function store(Request $request){
 
+        $image = '';
+        if($request->image && $request->hasFile('image')){
+            $file = $request->image;
+            $filename = time().'-'.rand(1000,100000).'-'. $file->getClientOriginalName();
+            $path = public_path().'/uploads';
+            $file->move($path, $filename);
+           $image = asset("uploads/$filename");
+        
+        }
+                
         $data =[
             'name' =>$request->get('name'),
             'description' =>$request->get('description'),
@@ -26,9 +36,10 @@ class ProductController extends Controller
             'quantity' =>$request->get('quantity'),
             'category' =>$request->get('category'),
             'status' =>$request->get('status'),
+            'image' => $image
         ];
 
-        Products::create($data);
+        $test = Products::insert($data);
         return redirect()->route('product.index');
     }
     public function update(Request $request, $id){
@@ -67,6 +78,17 @@ class ProductController extends Controller
     }
 
     public function delete($id){
+
+        if(!$id){
+            return redirect()->back();
+        }
+
+        $product = Products::find($id);
+        if($product){
+            $product->delete();
+            return redirect()->route('product.index');
+        }
+        return redirect()->back();
 
     }
 }
