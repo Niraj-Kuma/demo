@@ -25,7 +25,7 @@ class ProductController extends Controller
             $filename = time().'-'.rand(1000,100000).'-'. $file->getClientOriginalName();
             $path = public_path().'/uploads';
             $file->move($path, $filename);
-           $image = asset("uploads/$filename");
+           $image = $filename;
         
         }
                 
@@ -43,12 +43,27 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
     public function update(Request $request, $id){
+
         if(!$id){
             return redirect()->back();
         }
-
         $product = Products::find($id);
         if($product){
+
+            $image = '';
+            if($request->image && $request->hasFile('image')){
+                $delete_path = public_path()."/uploads/$product->image";
+                if(file_exists($delete_path)){
+                    unlink($delete_path);
+                }
+                $file = $request->image;
+                $filename = time().'-'.rand(1000,100000).'-'. $file->getClientOriginalName();
+                $path = public_path().'/uploads';
+                $file->move($path, $filename);
+               $image = $filename;
+            }
+
+            
             $data =[
                 'name' =>$request->get('name'),
                 'description' =>$request->get('description'),
@@ -56,6 +71,7 @@ class ProductController extends Controller
                 'quantity' =>$request->get('quantity'),
                 'category' =>$request->get('category'),
                 'status' =>$request->get('status'),
+                'image' => $image
             ];
     
     

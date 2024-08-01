@@ -19,6 +19,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">status</th>
       <th scope="col">category</th>
+      <th scope="col">image</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -33,6 +34,8 @@
       <td>{{ $product->quantity ?? ''}}</td>
       <td>{{ $product->status ?? ''}}</td>
       <td>{{ $product->category ?? ''}}</td>
+    
+      <td> <a href=" {{ asset('uploads').'/'.$product->image }}" target='_blank'> <img src="{{ asset('uploads').'/'.$product->image }}" width='100px'  height='100px'> </a></td>
       <td>
 
       <a href='{{route("product.edit",$product->id)}}'  class='btn btn-primary'> EDIT </a>
