@@ -44,6 +44,14 @@ Route::get('/product/edit/{id}','ProductController@edit')->name('product.edit');
 Route::post('/product/update/{id}','ProductController@update')->name('product.update');
 
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//Custom Auth Routes
+
+Route::view('/login', 'customeauth.login')->name('login');
+Route::post('/login/check', 'AuthController@login')->name('login.check');
+Route::view('/register', 'customeauth.register')->name('register');
+Route::post('/register/store', 'AuthController@register')->name('register.store');

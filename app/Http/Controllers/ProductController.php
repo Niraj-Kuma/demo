@@ -19,6 +19,15 @@ class ProductController extends Controller
     }
     public function store(Request $request){
 
+        $request ->validate([
+            'name' => 'required',
+            'price' =>'required|integer',
+            'image' =>'required|mimes:jpeg,bmp,png,jpg'
+        ]);
+
+
+      try{
+
         $image = '';
         if($request->image && $request->hasFile('image')){
             $file = $request->image;
@@ -36,17 +45,29 @@ class ProductController extends Controller
             'quantity' =>$request->get('quantity'),
             'category' =>$request->get('category'),
             'status' =>$request->get('status'),
-            'image' => $image
-        ];
-
+            'image' => $image,
+        ]; 
         $test = Products::insert($data);
+        $request->session()->flash('success', 'Record Created Successfully!');
         return redirect()->route('product.index');
+
+      }catch(\Exception $e){
+        $request->session()->flash('error', 'Something went wrong!');
+        return redirect()->route('product.index');
+      }
     }
     public function update(Request $request, $id){
 
         if(!$id){
             return redirect()->back();
         }
+
+        $request ->validate([
+            'name' => 'required',
+            'price' =>'required|integer',
+            'image' =>'required|mimes:jpeg,bmp,png'
+        ]);
+
         $product = Products::find($id);
         if($product){
 

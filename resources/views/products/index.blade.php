@@ -9,6 +9,27 @@
 </head>
 <body>
 
+
+@if(session('success'))
+<div class="alert alert-success" role="alert">
+    {{ session('success')}}
+</div>
+@endif
+
+
+@if(session('error'))
+<div class="alert alert-danger  " role="alert">
+    {{ session('error')}}
+</div>
+@endif
+
+<br>
+Hello {{ auth()->check() ? auth()->user()->name : ''}}
+
+
+
+<a href='{{ route("product.create")}}'  class="btn btn-secondary">Create</button>
+<br>
 <table class="table">
   <thead>
     <tr>

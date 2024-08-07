@@ -18,10 +18,13 @@ class UsersController extends Controller
    
 
    public function store( Request $request){
+
+          // $request->validate();
+
     $data = [
       'name' => $request->get('name'),
       'email' => $request->get('email'),
-      'password' => $request->get('password')
+      'password' =>bcrypt($request->get('password')) 
     ];
 
     User::insert($data);

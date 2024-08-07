@@ -8,12 +8,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
+
+
+<!-- @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif -->
+ 
+
     
 <form action="{{ route('product.store')}}" method='POST' enctype="multipart/form-data">
     @csrf
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">name</label>
-    <input type="text" class="form-control" id="" aria-describedby="" name='name'>
+    <label for="exampleInputEmail1" class="form-label">name <span style='color:red;'>*</span></label>
+    <input type="text" class="form-control" id="" aria-describedby="" name='name' value="{{ old('name') }}">
+    @if( $errors->first('name'))
+    <span style='color:red;'> {{ $errors->first('name') ?? '' }}</span>
+    @endif
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">price</label>
